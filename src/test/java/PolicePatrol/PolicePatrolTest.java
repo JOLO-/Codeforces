@@ -3,12 +3,15 @@ package PolicePatrol;
 
 import org.junit.Test;
 
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
+
 import static org.junit.Assert.assertEquals;
 
 public class PolicePatrolTest {
 
     @Test
-    public void calcDistance_test() {
+    public void calcDistance_correctnessTest() {
         int[] criminals1 = new int[]{0, 1, 2, 3, 4, 5, 6};
         assertEquals(24, PolicePatrol.calcDistance(criminals1, 1));
         assertEquals(16, PolicePatrol.calcDistance(criminals1, 2));
@@ -36,4 +39,23 @@ public class PolicePatrolTest {
         assertEquals(148, PolicePatrol.calcDistance(criminals5, 3));
     }
 
+
+    @Test
+    public void calcDistance_timeTest() {
+        int[] array = genRandomArray(100000000);
+        System.out.println("Start time test");
+        long beg = System.nanoTime();
+        PolicePatrol.calcDistance(array, 1);
+        long end = System.nanoTime();
+        System.out.println(TimeUnit.MILLISECONDS.convert(end - beg, TimeUnit.NANOSECONDS)); // 120 milliseconds on 100 millions
+    }
+
+    private int[] genRandomArray(int size) {
+        int[] array = new int[size];
+        Random random = new Random();
+        for (int i = 0; i < array.length; i++) {
+            array[i] = random.nextInt();
+        }
+        return array;
+    }
 }
