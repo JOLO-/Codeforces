@@ -30,17 +30,17 @@ public class PolicePatrol {
         long distance = 0;
         int currPos = criminals[currIndex];
         for (int i = 0; i < currIndex; i += patrolCapacity) {
-            distance += 2 * (currPos - criminals[i]);
+            distance += (currPos - criminals[i]);
         }
-        return distance;
+        return 2 * distance;
     }
 
     private static long calcRightDistance(int[] criminals, int currIndex, int patrolCapacity) {
         long distance = 0;
         int currPos = criminals[currIndex];
         for (int i = criminals.length - 1; i > currIndex; i -= patrolCapacity) {
-            distance += 2 * (criminals[i] - currPos);
+            distance += (criminals[i] - currPos);
         }
-        return distance;
+        return 2 * distance;
     }
 }
