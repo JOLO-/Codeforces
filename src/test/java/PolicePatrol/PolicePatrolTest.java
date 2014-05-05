@@ -48,12 +48,12 @@ public class PolicePatrolTest {
         long beg = System.nanoTime();
         long distance = PolicePatrol.calcDistance(array, 1);
         long end = System.nanoTime();
-        System.out.println(TimeUnit.MILLISECONDS.convert(end - beg, TimeUnit.NANOSECONDS)); // 120 milliseconds on 100 millions
+        System.out.println(TimeUnit.MILLISECONDS.convert(end - beg, TimeUnit.NANOSECONDS)); // 168 milliseconds on 100 millions
 
         long beg2 = System.nanoTime();
-        long distance2 = PolicePatrol.calcDistance2(array, 1);
+        long distance2 = PolicePatrol.calcDistanceOptimized(array, 1);
         long end2 = System.nanoTime();
-        System.out.println(TimeUnit.MILLISECONDS.convert(end2 - beg2, TimeUnit.NANOSECONDS));
+        System.out.println(TimeUnit.MILLISECONDS.convert(end2 - beg2, TimeUnit.NANOSECONDS)); // 68 milliseconds on 100 millions
 
         assertEquals(distance, distance2);
     }

@@ -1,12 +1,32 @@
 package PolicePatrol;
 
-import java.io.PrintWriter;
-import java.util.Scanner;
+import java.io.*;
+import java.util.StringTokenizer;
 
 public class PolicePatrol {
 
-    public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
+    private static class FastScanner {
+        BufferedReader br;
+        StringTokenizer st;
+
+        FastScanner(InputStream f) {
+            br = new BufferedReader(new InputStreamReader(f));
+        }
+
+        String next() throws IOException {
+            while (st == null || !st.hasMoreTokens()) {
+                st = new StringTokenizer(br.readLine());
+            }
+            return st.nextToken();
+        }
+
+        int nextInt() throws IOException {
+            return Integer.parseInt(next());
+        }
+    }
+
+    public static void main(String[] args) throws IOException {
+        FastScanner in = new FastScanner(System.in);
         PrintWriter out = new PrintWriter(System.out);
 
         int criminalAmount = in.nextInt();
@@ -15,12 +35,12 @@ public class PolicePatrol {
         for (int i = 0; i < criminalLocations.length; i++)
             criminalLocations[i] = in.nextInt();
 
-        long distance = calcDistance2(criminalLocations, patrolCarCapacity);
+        long distance = calcDistanceOptimized(criminalLocations, patrolCarCapacity);
         out.print(distance);
         out.flush();
     }
 
-    protected static long calcDistance2(int[] criminals, int patrolCapacity) {
+    protected static long calcDistanceOptimized(int[] criminals, int patrolCapacity) {
         int patrolPosition = criminals[criminals.length / 2];
 
         double itr = (criminals.length - 1) / 2.0;
