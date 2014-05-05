@@ -7,6 +7,7 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class PolicePatrolTest {
 
@@ -45,9 +46,16 @@ public class PolicePatrolTest {
         int[] array = genRandomArray(100000000);
         System.out.println("Start time test");
         long beg = System.nanoTime();
-        PolicePatrol.calcDistance(array, 1);
+        long distance = PolicePatrol.calcDistance(array, 1);
         long end = System.nanoTime();
         System.out.println(TimeUnit.MILLISECONDS.convert(end - beg, TimeUnit.NANOSECONDS)); // 120 milliseconds on 100 millions
+
+        long beg2 = System.nanoTime();
+        long distance2 = PolicePatrol.calcDistance2(array, 1);
+        long end2 = System.nanoTime();
+        System.out.println(TimeUnit.MILLISECONDS.convert(end2 - beg2, TimeUnit.NANOSECONDS));
+
+        assertEquals(distance, distance2);
     }
 
     private int[] genRandomArray(int size) {

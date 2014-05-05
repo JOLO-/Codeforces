@@ -15,9 +15,32 @@ public class PolicePatrol {
         for (int i = 0; i < criminalLocations.length; i++)
             criminalLocations[i] = in.nextInt();
 
-        long distance = calcDistance(criminalLocations, patrolCarCapacity);
+        long distance = calcDistance2(criminalLocations, patrolCarCapacity);
         out.print(distance);
         out.flush();
+    }
+
+    protected static long calcDistance2(int[] criminals, int patrolCapacity) {
+        int patrolPosition = criminals[criminals.length / 2];
+
+        double itr = (criminals.length - 1) / 2.0;
+        int itrLeft = (int) Math.ceil(Math.ceil(itr) / ((double) patrolCapacity));
+        int itrRight = (int) Math.ceil(Math.floor(itr) / ((double) patrolCapacity));
+
+        long distance = 0;
+
+        int lo = 0;
+        while (itrLeft-- > 0) {
+            distance += patrolPosition - criminals[lo];
+            lo = lo + patrolCapacity;
+        }
+
+        int hi = criminals.length - 1;
+        while (itrRight-- > 0) {
+            distance += criminals[hi] - patrolPosition;
+            hi -= patrolCapacity;
+        }
+        return 2 * distance;
     }
 
     protected static long calcDistance(int[] criminals, int patrolCapacity) {
