@@ -43,12 +43,13 @@ public class PrisonTransferTest {
         new MockUp<PrintWriter>() {
 
             private int actualResult;
-            private int[] expectedResults = new int[] {9, 2, 0, 2, 0, 6};
+            private int[] expectedResults = new int[] {9, 0, 0, 2, 0, 6};
             private byte pointer = 0;
 
             @SuppressWarnings("unused")
             @Mock(invocations = INPUT_NUMBER)
             public void print(int i) {
+                System.out.println("Result for " + InputCounter.inputNumber + " input = " + i);
                 actualResult = i;
             }
 
@@ -56,14 +57,14 @@ public class PrisonTransferTest {
             @Mock(invocations = INPUT_NUMBER)
             public void flush() {
                 System.out.println("Check input# " + InputCounter.inputNumber + " result");
-                assertEquals(expectedResults[InputCounter.inputNumber++], actualResult);
+                assertEquals(expectedResults[InputCounter.inputNumber - 1], actualResult);
+                InputCounter.inputNumber++;
+                InputCounter.pointer = 0;
             }
         };
 
         for (int i = 0; i < INPUT_NUMBER; i++) {
             PrisonTransfer.calcTransferCombinations();
-            InputCounter.inputNumber++;
-            InputCounter.pointer = 0;
         }
     }
 

@@ -38,20 +38,20 @@ public class PrisonTransfer {
         final int MAX_AGGRESSION = in.nextInt();
         final int RANK_LENGTH = in.nextInt();
 
-        int combinations = PRISONERS_NUMBER;
+        int combinations = PRISONERS_NUMBER - RANK_LENGTH + 1;
         int distanceToLastDangerous = RANK_LENGTH;
         int itr = 1;
         while (itr <= PRISONERS_NUMBER) {
             int aggression = in.nextInt();
             if (aggression > MAX_AGGRESSION) {
+                if (PRISONERS_NUMBER - itr < RANK_LENGTH) {
+                    combinations -= Math.min(PRISONERS_NUMBER - itr + 1, distanceToLastDangerous);
+                    break;
+                }
+
                 int left = min(itr, RANK_LENGTH, distanceToLastDangerous);
                 combinations -= left;
                 distanceToLastDangerous = 0;
-
-                if (PRISONERS_NUMBER - itr < RANK_LENGTH) {
-                    combinations -= (PRISONERS_NUMBER - itr);
-                    break;
-                }
             }
             distanceToLastDangerous++;
             itr++;
