@@ -12,7 +12,7 @@ import static junit.framework.Assert.assertEquals;
 public class PrisonTransferTest {
 
     @Test
-    public void calcTransferCombinations_correctnessTest2() throws IOException {
+    public void calcTransferCombinations_test() throws IOException {
         final int INPUT_NUMBER = 6;
 
         new MockUp<PrisonTransfer.FastScanner>() {
@@ -24,12 +24,11 @@ public class PrisonTransferTest {
             private int[] input5 = new int[] {1, 1, 1, 2};
             private int[] input6 = new int[] {11, 4, 2, 2, 2, 0, 7, 3, 2, 2, 4, 9, 1, 4};
 
-            private byte pointer = 0;
-
             @SuppressWarnings("unused")
+            @Mock
             int nextInt() throws IOException {
                 int[] input = null;
-                switch (getMockInstance().getInputToggle()) {
+                switch (InputCounter.inputNumber) {
                     case 1: input = input1; break;
                     case 2: input = input2; break;
                     case 3: input = input3; break;
@@ -37,7 +36,7 @@ public class PrisonTransferTest {
                     case 5: input = input5; break;
                     case 6: input = input6; break;
                 }
-                return input[pointer++];
+                return input[InputCounter.pointer++];
             }
         };
 
@@ -56,13 +55,20 @@ public class PrisonTransferTest {
             @SuppressWarnings("unused")
             @Mock(invocations = INPUT_NUMBER)
             public void flush() {
-                assertEquals(expectedResults[pointer++], actualResult);
+                System.out.println("Check input# " + InputCounter.inputNumber + " result");
+                assertEquals(expectedResults[InputCounter.inputNumber++], actualResult);
             }
         };
 
         for (int i = 0; i < INPUT_NUMBER; i++) {
             PrisonTransfer.calcTransferCombinations();
-            PrisonTransfer.FastScanner.toggleInput();
+            InputCounter.inputNumber++;
+            InputCounter.pointer = 0;
         }
+    }
+
+    private static class InputCounter {
+        public static byte inputNumber = 1;
+        public static byte pointer = 0;
     }
 }

@@ -8,7 +8,6 @@ public class PrisonTransfer {
     protected static class FastScanner {
         BufferedReader br;
         StringTokenizer st;
-        private static byte inputToggle = 1;
 
         FastScanner(InputStream f) {
             br = new BufferedReader(new InputStreamReader(f));
@@ -23,14 +22,6 @@ public class PrisonTransfer {
 
         int nextInt() throws IOException {
             return Integer.parseInt(next());
-        }
-
-        public static void toggleInput() {
-            inputToggle++;
-        }
-
-        public byte getInputToggle() {
-            return inputToggle;
         }
     }
 
